@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{registration}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="h1_title" th:text="#{registration}"></div>
+    <div class="container">
+        <form th:action="@{/register}" method="post" th:object="${appUser}">
+
+            <div class="row">
+                <div class="col-lg-6  b_e_g_no center_sub_elements">
+                    <h4 th:text="#{registration}"></h4>
+                    <div class="row">
+                        <div class="col-lg-4" style="text-align:right;" th:text="#{email}"></div>
+                        <div class="col-lg-6"> <input type="text" name="username" th:field="*{username}" /> </div>
+                        <div class="brown_border" th:each="error : ${#fields.errors('username')}" th:text="${error}"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4" style="text-align:right;" th:text="#{password}"></div>
+                        <div class="col-lg-6"> <input type="password" name="password" th:field="*{password}" /> </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4" style="text-align:right;" th:text="#{confirmPassword}"></div>
+                        <div class="col-lg-6"> <input id="confirmPassword" type="password" name="confirmPassword"/> </div>
+                        <div class="brown_border" th:each="error : ${#fields.errors('password')}" th:text="${error}"></div>
+                    </div>
+                    <br/>  <input type="submit" th:value="#{register}">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

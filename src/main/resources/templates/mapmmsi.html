@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{ship_routes}"></title>
+<!--    <link href="/css/leaflet.css" rel="stylesheet">-->
+<!--    <script type='text/javascript' src='/js/leaflet.js'></script>-->
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="h1_title" th:text="#{ship_routes}"></div>
+    <div class="container">
+
+        <div class="row">
+            <div th:if="${#lists.size(routes)}>0">
+                <div id="over"></div>
+                <div class="under_over_map"><a href="#under" class="href_gold" th:text="#{map.take_me_under_the_map}"></a></div>
+                <div id="map" style="width: 800px; height:600px;  border: 1px solid #AAA;"></div>
+                <script th:inline="javascript">
+                var routes = [[${routes}]];
+                var pathCoords = [];
+
+                var map = L.map('map').setView([routes[0].latitude, routes[0].longitude], 9);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+            routes.forEach(value => {
+            L.marker([value.latitude, value.longitude]).addTo(map).bindPopup(" "+value.addedTime).openPopup();
+            pathCoords.push([value.latitude, value.longitude]);
+            });
+            L.polyline(pathCoords).addTo(map)
+			 </script>
+                <div id="under"></div>
+                <div class="under_over_map"> <a href="#over" class="href_gold" th:text="#{map.take_me_over_the_map}"></a></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div th:if="${#lists.size(routes)}>0" th:each="singleRoute : ${routes}"  class="col-lg-3 col-md-4 col-sm-6 col-xs-12 b_e single_element">
+                <div class="brown_border">
+                    <span th:text="${#temporals.format(singleRoute.addedTime, 'yyyy-MM-dd')}"></span>
+                    <span style="font-weight:bold;" th:text="${#temporals.format(singleRoute.addedTime, 'HH:mm')}"></span>
+                </div>
+                <div style='font-size: 17px;'>
+                    Lati <span th:text="${singleRoute.latitude}"></span>   Long  <span th:text="${singleRoute.longitude}"></span>
+                </div>
+            </div>
+            <div th:unless="${#lists.size(routes)}>0">
+                <span th:text="#{no_routes_to_show}"></span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

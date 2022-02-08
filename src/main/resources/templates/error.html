@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{error_page}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="h1_title" th:text="#{error_page}"></div>
+    <div class="container">
+        <div class="row">
+                <div class="col-lg-6  b_e_g_no">
+                    <div class="row small_description b_e_g brown_border">
+                        <div class="col-lg-12" style="text-align:center;">
+                            <span th:text="#{error_code}"></span> <span class="title_spacing bold" th:text="${status}"></span>
+                        </div>
+                    </div>
+                    <h4><span th:text="${error}"/></h4>
+                    <br><span th:text="${message}"/>
+                </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

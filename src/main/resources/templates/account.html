@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{my_account}"></title>
+    <script src="/js/ShowHideId.js"></script>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="h1_title" th:text="#{my_account}"></div>
+
+
+    <div th:if="${!#strings.isEmpty(destinations)}">
+        <div class="hscroll" th:if="${#lists.size(destinations)}>0">
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="display:block-line;" class="hidden_elements" th:text="#{name}"></th>
+                <th style="display:block-line;" class="hidden_elements">Latitude</th>
+                <th style="display:block-line;" class="hidden_elements">Longitude</th>
+                <th th:text="#{various_information}"></th>
+                <th th:text="#{important_information}"></th>
+                <th>
+                    <a th:if="${user_role}==ROLE_ADMIN" class="btn btn-primary" href="/destination/add" role="button" th:text="#{add_new_port}"></a>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="singleDestination : ${destinations}">
+                <td style="display:block-line;" class="hidden_elements"><span th:text="${singleDestination.name}"></span></td>
+                <td style="display:block-line;" class="hidden_elements"><span th:text="${singleDestination.latitude}"></span></td>
+                <td style="display:block-line;" class="hidden_elements"><span th:text="${singleDestination.longitude}"></span></td>
+                <td><span th:text="${singleDestination.description}"></span></td>
+                <td><span th:text="${singleDestination.info}"></span></td>
+                <td>
+
+                    <a class="btn btn-success" th:href="@{/destination/{id}(id=${singleDestination.id})}"
+                       role="button" th:text="#{details}"></a>
+                    <a th:if="${user_role}==ROLE_HARBOR_MASTER AND ${user_id}==${singleDestination.userId}"     class="btn btn-warning" th:href="@{/destination/edit/{id}(id=${singleDestination.id})}" role="button" th:text="#{edit}"></a>
+                    <a th:if="${user_role}==ROLE_ADMIN" class="btn btn-danger"  th:href="@{/destination/delete/{id}(id=${singleDestination.id})}" role="button" th:text="#{delete}"></a>
+
+
+
+                    <span style="display:block-line;" class="show_elements">
+                    <br/><span th:text="#{name}"></span>: <span class="bold" th:text="${singleDestination.name}"></span>
+                    <br/>Latitude: <span class="bold" th:text="${singleDestination.latitude}"></span>
+                    <br/>Longitude: <span class="bold" th:text="${singleDestination.longitude}"></span>
+                    </span>
+
+
+                </td>
+            </tr>
+            </tbody>
+            </div>
+        </table>
+
+    </div>
+ </div>
+
+</body>
+</html>

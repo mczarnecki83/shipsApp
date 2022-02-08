@@ -1,0 +1,42 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="4" author="mczarnecki">
+        <comment>Add route table</comment>
+        <createTable tableName="route">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="actual_course" type="double">
+                <constraints nullable="true"/>
+            </column>
+            <column name="actual_speed" type="double">
+                <constraints nullable="true"/>
+            </column>
+            <column name="added_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="arrival_time" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="latitude" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="longitude" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ship_mmsi" type="integer">
+                <constraints nullable="false" foreignKeyName="fk_ship_routes" references="ship(mmsi)"/>
+            </column>
+            <column name="destination_id" type="integer">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+       <rollback>
+            <dropTable tableName="route"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

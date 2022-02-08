@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/img/favicon.ico">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+
+<header class="nav_style">
+    <nav class="navbar bg-jumpers navbar-expand-lg navbar-light down_border">
+        <a class="navbar-brand" href="/"><img src="/img/logo.png"/></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu" aria-controls="mainmenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+
+        <div class="collapse navbar-collapse" id="mainmenu">
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav_item">
+                    <a href="/ships" th:class="${active_href == 'ship_data'} ? 'bold nav_link' : 'nav_link'" th:text="#{ship_data}"></a>
+                </li>
+
+                <li class="nav_item">
+                    <a href="/api-links" th:class="${active_href == 'api_endpoints'} ? 'bold nav_link' : 'nav_link'" th:text="#{api_endpoints}"></a>
+                </li>
+
+                <li class="nav_item">
+                    <a href="/destination" th:class="${active_href == 'ports'} ? 'bold nav_link' : 'nav_link'" th:text="#{ports}"></a>
+                </li>
+
+                <li class="nav_item">
+                    <a href="/map-date" th:class="${active_href == 'todays_routes'} ? 'bold nav_link' : 'nav_link'"  th:text="#{todays_routes}"></a>
+                </li>
+
+                <li class="nav_item">
+                    <a href="/map-popular" th:class="${active_href == 'long_routes'} ? 'bold nav_link' : 'nav_link'"  th:text="#{long_routes}"></a>
+                </li>
+
+                <li class="nav_item">
+                    <a href="/map-popular-native" th:class="${active_href == 'long_routes_nq'} ? 'bold nav_link' : 'nav_link'"  th:text="#{long_routes_NQ}"></a>
+                </li>
+
+                <li class="nav_item" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a href="/save" th:class="${active_href == 'add_new_routes'} ? 'bold nav_link' : 'nav_link'" th:text="#{add_new_routes}"></a>
+                </li>
+
+                <li class="nav_item" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a href="/clear-standing-ships" th:class="nav_link" th:text="#{drop_standing}"></a>
+                </li>
+
+
+            </ul>
+
+            <div style="display: block;">
+
+
+                <ul class="navbar-nav mr-auto">
+                        <li class="nav_item"><a href="/?lang=pl" class="nav_link"><img src="/img/pl.png" width="35px;"/></a></li>
+                        <li class="nav_item"><a href="/?lang=en" class="nav_link"><img src="/img/en.png" width="35px;"/></a></li>
+
+                        <li sec:authorize="isAuthenticated()" class="nav_item"><a href="/my-account" th:class="${active_href == 'account'} ? 'bold nav_link' : 'nav_link'" th:text="#{my_account}"></a></li>
+                        <li sec:authorize="isAuthenticated()" class="nav_item"><a href="/logout" class="nav_link" th:text="#{log_out}"></a></li>
+
+                        <li sec:authorize="!isAuthenticated()" class="nav_item"><a href="/login" th:class="${active_href == 'login'} ? 'bold nav_link' : 'nav_link'" th:text="#{login}"></a></li>
+                        <li sec:authorize="!isAuthenticated()" class="nav_item"><a href="/register" th:class="${active_href == 'register'} ? 'bold nav_link' : 'nav_link'" th:text="#{registration}"></a></li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<body>
+
+<section layout:fragment="content"></section>
+
+
+</body>
+</html>

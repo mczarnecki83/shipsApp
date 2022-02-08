@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Strona główna</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="h1_title">Kasowanie statków które stoją w portach</div>
+    <section class="my-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+<pre>
+   5)    delete from route where ship_mmsi in (
+         select distinct(z.ship_mmsi) from Route as z where
+   1,3)  (<b>select max(w.latitude)-min(w.latitude)</b> from Route as w where w.ship_mmsi = z.ship_mmsi) <0.01
+   2,4)  and (select <b>count(w2.latitude)</b> from Route as w2 where w2.ship_mmsi=z.ship_mmsi) > 4
+         )
+</pre>
+                    <br>1) Pobierana jest różnica współrzędnych latitude z wartości max i min dla konkretnego statku
+                    <br>2) Pobierana jest ilość zapisanych pomiarów na dany statek
+                    <br>3) Jeśli różnica we współrzędnych jest mniejsza niż 0.01 oraz
+                    <br>4) Ilość pomiarów jest większa niż 4
+                    <br>5) To wszystkie wpisy są kasowane
+                    <br>//docelowo zmienić aby było delete cascade i kasowac już z poziomu statków.
+
+
+                   <br><br> Potwierdź chęć wyczyszczenia bazy ze stojących statków
+                    <form th:action="@{/confirmDelete}" method="post">
+                        <input type="submit" value="Czyść bazę">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>

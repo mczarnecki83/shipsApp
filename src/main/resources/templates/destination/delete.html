@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{delete_port}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="h1_title" th:text="#{delete_port}"></div>
+    <div class="container">
+        <div class="row" th:if="${!#strings.isEmpty(destinationData)}">
+            <div class="col-lg-8 b_e_g_no">
+                <div class="row small_description b_e_g brown_border">
+                    <div class="col-lg-12">
+                        <span class="title_spacing bold" th:text="#{you_really_want_to_delete_this_port}"></span>
+                    </div>
+                </div>
+
+                <h4 th:text="${destinationData.name}"></h4>
+                <form th:action="@{/destination/delete/{id}(id=${destinationData.id})}" th:method="delete">
+                    <input type="hidden" name="id" th:value="${destinationData.id}">
+                    <input type="submit" th:value="#{delete_port}"/>
+                </form>
+            </div>
+        </div>
+
+        <div th:unless="${!#strings.isEmpty(destinationData)}">
+            <span th:text="#{there_is_no_port_to_delete}"></span>
+        </div>
+
+
+    </div>
+</div>
+</body>
+</html>

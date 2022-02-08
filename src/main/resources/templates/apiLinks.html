@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{api_endpoints}"></title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="h1_title" th:text="#{api_endpoints}"></div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 b_e_g_no">
+                <span class="bold_gray" th:text="GET"> GET  </span> <span class="title_spacing"> /routes </span> <span th:text="#{api.auto_routes_from_spring}"></span>
+                <br><span class="bold_gray"/> GET </span> <span class="title_spacing"> /destinations </span> <span th:text="#{api.auto_ports_from_spring}"></span>
+                <br><br><span class="bold_gray"> POST </span> <span class="title_spacing"> /api/destination/add  </span> <span th:text="#{api.add_port}"></span>
+                <br><span class="bold_gray"> GET </span> <span class="title_spacing">  /api/destination/  </span> <span th:text="#{api.list_ports}"></span>
+                <br><span class="bold_gray">  GET </span><span class="title_spacing"> /api/destination/{id} </span> <span th:text="#{api.single_port}"></span>
+                <br><span class="bold_gray"> PUT </span> <span class="title_spacing">  /api/destination/{id} </span>  <span th:text="#{api.update_single_port}"></span>
+                <br><span class="bold_gray"> DELETE </span> <span class="title_spacing">  /api/destination/{id}  </span> <span th:text="#{api.delete_single_port}"></span>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+</html>

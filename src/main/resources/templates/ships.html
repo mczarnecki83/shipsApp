@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{ship_data}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="h1_title" th:text="#{ship_data}"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 " style="text-align: center;">
+
+                <div class="row">
+                    <div th:if="${!#strings.isEmpty(ships)}" th:each="singleShip : ${ships}"
+                         class="col-lg-3 col-md-4 col-sm-6 col-xs-12 b_e single_element">
+                        <div class="brown_border">
+                            <span th:text="${singleShip.name}">      </span>
+                        </div>
+                        <div style='font-size: 22px;'>
+                            <a class="href_gold" th:href="@{/map-mmsi/{mmsi}(mmsi=${singleShip.mmsi})}"><span
+                                    th:text="${singleShip.mmsi}"></span></a>
+                        </div>
+                        <span class="small_description">
+                           <span class="bold_gray" th:text="#{saved_positions}"></span>
+			               <span th:text="${#lists.size(singleShip.routes)}"> </span>
+			            </span>
+                    </div>
+                    <div th:unless="${!#strings.isEmpty(ships)}">
+                        <span th:text="#{no_ships_to_show}">      </span>
+                    </div>
+                </div>
+                <div th:insert="/pagination :: pagination"></div>
+            </div>
+
+            <div class="col-lg-3  b_e_g_no">
+                <a href="/ship-courses-native-query" class='href_gold' th:text="#{sort_number_saved_items}"></a>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{port_list}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="h1_title" th:text="#{port_list}"> </div>
+    <div class="container">
+        <div th:if="${message}" th:text="#{${message}}" th:class="${'alert ' + alertClass}"/>
+        <div class="row">
+            <div class="col-lg-9">
+                <div th:if="${#lists.size(destinations)}>0">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th th:text="#{name}"></th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>
+                                <a th:if="${user_role}==ROLE_ADMIN" class="btn btn-primary" href="/destination/add" role="button" th:text="#{add_new_port}"></a>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="singleDestination : ${destinations}">
+                            <td><span th:text="${singleDestination.name}"></span></td>
+                            <td><span th:text="${singleDestination.latitude}"></span></td>
+                            <td><span th:text="${singleDestination.longitude}"></span></td>
+                            <td>
+                                <a class="btn btn-success" th:href="@{/destination/{id}(id=${singleDestination.id})}"
+                                   role="button" th:text="#{details}"></a>
+                                <a th:if="${user_role}==ROLE_HARBOR_MASTER AND ${user_id}==${singleDestination.userId}"     class="btn btn-warning" th:href="@{/destination/edit/{id}(id=${singleDestination.id})}" role="button" th:text="#{edit}"></a>
+                                <a th:if="${user_role}==ROLE_ADMIN" class="btn btn-danger"  th:href="@{/destination/delete/{id}(id=${singleDestination.id})}" role="button" th:text="#{delete}"></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:unless="${#lists.size(destinations)}>0" class="text-center">
+                    <div class="alert alert-danger" role="alert">
+                        <span th:text="#{no_ports}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

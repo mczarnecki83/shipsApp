@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{add_new_port}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="h1_title" th:text="#{add_new_port}"></div>
+    <div class="container">
+
+        <form th:action="@{/destination/add}" th:method="post" th:object="${destination}">
+            <div class="row">
+                <div class="col-lg-6  b_e_g_no center_sub_elements">
+                    <h4 th:text="#{enter_information_for_new_port}"></h4>
+                    <div class="row">
+                        <div class="col-lg-4" th:text="#{name}"></div>
+                        <div class="col-lg-6"> <input type="text" name="name" th:field="*{name}"  th:placeholder="#{3_255_chars}" /> </div>
+                        <div class="brown_border" th:if="${#fields.hasErrors('name')}"
+                             th:each="e : ${#fields.errors('name')}" th:text="#{${e}}" >
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4"> Latitude </div>
+                        <div class="col-lg-6"> <input type="text" name="latitude" th:field="*{latitude}"  oninput="this.value = this.value.replace(/,/g, '.').replace(/[^0-9.-]/g, '');"/> </div>
+                        <div class="brown_border" th:if="${#fields.hasErrors('latitude')}"
+                             th:each="e : ${#fields.errors('latitude')}" th:text="#{${e}}" >
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4"> Longitude </div>
+                        <div class="col-lg-6"> <input type="text" name="longitude"th:field="*{longitude}"  oninput="this.value = this.value.replace(/,/g, '.').replace(/[^0-9.-]/g, '');"/> </div>
+
+                        <div class="brown_border" th:if="${#fields.hasErrors('longitude')}"
+                             th:each="e : ${#fields.errors('longitude')}" th:text="#{${e}}" >
+                        </div>
+                    </div>
+                    <br/> <input type="submit" th:value="#{add_new_port}"/>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+</body>
+</html>

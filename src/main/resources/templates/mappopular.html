@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{long_routes}"></title>
+    <link href="/css/leaflet.css" rel="stylesheet">
+    <script type='text/javascript' src='/js/leaflet.js'></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+
+</head>
+<body>
+
+var map = L.map('map').setView([routes[0].latitude, routes[0].longitude], 9);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+var pathCoords = [];
+routes.forEach(value => {
+console.log(value.ship.mmsi);
+actualMmsi=value.ship.mmsi;
+if (oldMmsi != actualMmsi){
+if(oldMmsi!=0){
+L.polyline(pathCoords,{color:get_random_color()}).addTo(map);
+}
+pathCoords = [];
+}
+
+L.marker([value.latitude, value.longitude]).addTo(map).bindPopup('<a href="/map-mmsi/'+value.ship.mmsi+'"
+                                                                     target="_blank">'+value.ship.mmsi+'</a>').openPopup();
+pathCoords.push([value.latitude, value.longitude]);
+oldMmsi=actualMmsi;
+});
+
+L.polyline(pathCoords,{color:get_random_color()}).addTo(map)
+
+<div layout:fragment="content">
+    <div class="h1_title" th:text="#{long_routes} +' ' + ${actualDate} "></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-10  b_e_g_no">
+                <div class="row small_description b_e_g brown_border">
+                    <div class="col-lg-12">
+                        <span class="title_spacing bold" th:text="#{maps}"></span>
+                    </div>
+                </div>
+
+
+                <div th:if="${!#strings.isEmpty(routes)}">
+                    <div class="row" th:if="${#lists.size(routes)}>0">
+                        <div id="over"></div>
+                        <div class="under_over_map"><a href="#under" class="href_gold"
+                                                       th:text="#{map.take_me_under_the_map}"></a></div>
+                        <div id="map" style="width: 1200px; height:800px;  border: 1px solid #AAA;"></div>
+                        <script th:inline="javascript">
+
+            function get_random_color()
+            {
+                var letters = '0123456789ABCDEF'.split('');
+                var color = '#';
+                for (var i = 0; i < 6; i++ )
+                {
+                color += letters[Math.round(Math.random() * 15)];
+                }
+                return color;
+            }
+
+                 var routes = [[${routes}]];
+                 var oldMmsi = 0;
+                 var actualMmsi = 0;
+
+        var map = L.map('map').setView([routes[0].latitude, routes[0].longitude], 9);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+        var pathCoords = [];
+            routes.forEach(value => {
+                console.log(value.ship.mmsi);
+                actualMmsi=value.ship.mmsi;
+                if (oldMmsi != actualMmsi){
+                    if(oldMmsi!=0){
+                        L.polyline(pathCoords,{color:get_random_color()}).addTo(map);
+                    }
+                    pathCoords = [];
+                }
+    L.marker([value.latitude, value.longitude]).addTo(map).bindPopup('<a href="/map-mmsi/'+value.ship.mmsi+'" target="_blank">'+value.ship.mmsi+'</a>').openPopup();
+        pathCoords.push([value.latitude, value.longitude]);
+    oldMmsi=actualMmsi;
+});
+
+L.polyline(pathCoords,{color:get_random_color()}).addTo(map)
+
+                        </script>
+                        <div id="under"></div>
+                        <div class="under_over_map"><a href="#over" class="href_gold"
+                                                       th:text="#{map.take_me_over_the_map}"></a></div>
+                    </div>
+                </div>
+
+
+                <div th:unless="${!#strings.isEmpty(routes)}">
+                    <span th:text="#{no_routes_to_show}"></span>
+                </div>
+            </div>
+            <div class="col-lg-2 b_e_g_no">
+                <div class="row small_description b_e_g brown_border">
+                    <div class="col-lg-12">
+                        <span class="title_spacing bold" th:text="#{choose_a_day}"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <form method="get" action="/map-popular">
+                            <input type="date" name="date" th:value="${actualDate}">
+                            <input type="submit" name="submit" th:value="#{search}"/>
+                        </form>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

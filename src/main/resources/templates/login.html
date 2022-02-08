@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{login}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="h1_title" th:text="#{login}"></div>
+    <div class="container">
+        <div th:if="${message}" th:text="#{${message}}" th:class="${'alert ' + alertClass}"/>
+        <form th:action="@{/login}" method="post">
+            <div class="row">
+                <div class="col-lg-6  b_e_g_no center_sub_elements">
+                    <div th:if="${param.logout}" class="brown_border">
+                        <span th:text="#{flash.you_have_been_logged_out}"></span>
+                    </div>
+                    <h4 th:text="#{login}"></h4>
+                    <div class="row">
+                        <div class="col-lg-4" style="text-align:right;" th:text="#{email}"></div>
+                        <div class="col-lg-6"> <input type="text" id="username" name="username"/> </div>
+                        <div th:if="${param.error}" class="brown_border">
+                            <span th:text="#{flash.invalid_username_and_password}"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4" style="text-align:right;" th:text="#{password}"></div>
+                        <div class="col-lg-6"> <input type="password" name="password" id="password" /> </div>
+                    </div>
+                    <br/>  <input type="submit" th:value="#{log_in}">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{ship_data}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="h1_title" th:text="#{ship_data}"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 " style="text-align: center;">
+                <div class="row">
+                    <div th:each="singleShip : ${ships}" class="col-lg-3 col-md-4 col-sm-6 col-xs-12 b_e single_element">
+                        <div class="brown_border">
+                            <span th:text="${singleShip[1]}"> </span>
+                        </div>
+                        <div style='font-size: 22px;'>
+                            <a th:href='@{/map-mmsi/{mmsi}(mmsi=${singleShip[0]})}' class='href_gold' style='font-size: 16px;'> <span
+                                    th:text="${singleShip[0]}"> </span> </a>
+                        </div>
+                        <span class="small_description">
+                         <span class="bold_gray" th:text="#{saved_positions}"></span>
+                         <span th:text="${singleShip[2]}"> </span>
+			    </span>
+                    </div>
+                </div>
+                <div th:insert="/pagination :: pagination"></div>
+            </div>
+            <div class="col-lg-3  b_e_g_no">
+                <a href="/ships" class='href_gold' th:text="#{sort_by_name}"></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{edit_port}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="h1_title" th:text="#{edit_port}"></div>
+    <div class="container">
+
+        <form th:action="@{/destination/edit}" th:method="post" th:object="${destination}">
+            <div class="row">
+                <div class="col-lg-6  b_e_g_no center_sub_elements">
+                    <h4 th:text="#{edit_information_for_port}"></h4>
+                    <div class="row">
+                        <div class="col-lg-4" th:text="#{name}"></div>
+                        <div class="col-lg-6"> <input type="text" name="name" th:field="*{name}"  /> </div>
+                        <div class="brown_border" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4"> Latitude </div>
+                        <div class="col-lg-6"> <input type="text" name="latitude" th:field="*{latitude}"  oninput="this.value = this.value.replace(/,/g, '.').replace(/[^0-9.-]/g, '');"/> </div>
+<!--                        <div class="brown_border" th:if="${#fields.hasErrors('latitude')}" th:errors="*{latitude}"></div>-->
+                        <div class="brown_border" th:if="${#fields.hasErrors('latitude')}"
+                             th:each="e : ${#fields.errors('latitude')}" th:text="#{${e}}" >
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4"> Longitude </div>
+                        <div class="col-lg-6"> <input type="text" name="longitude"th:field="*{longitude}"  oninput="this.value = this.value.replace(/,/g, '.').replace(/[^0-9.-]/g, '');"/> </div>
+<!--                        <div class="brown_border" th:if="${#fields.hasErrors('longitude')}" th:errors="*{longitude}"></div>-->
+                        <div class="brown_border" th:if="${#fields.hasErrors('longitude')}"
+                             th:each="e : ${#fields.errors('longitude')}" th:text="#{${e}}" >
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4" th:text="#{overall_description}"></div>
+                        <div class="col-lg-8"> <textarea rows="4" style="width:100%;" name="description" th:field="*{description}" /> </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4" th:text="#{up_to_date_important_information}"></div>
+                        <div class="col-lg-8"> <textarea rows="4" style="width:100%;" name="info" th:field="*{info}" /> </div>
+                    </div>
+
+
+                    <input type="hidden" name="id" th:field="*{id}" />
+                    <input type="hidden" name="userId" th:field="*{userId}" />
+                    <input type="hidden" name="oldName" th:value="${oldName}" />
+                    <br/> <input type="submit" th:value="#{save_changes}"/>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+</body>
+</html>
