@@ -4,8 +4,6 @@ import com.hobbyjoin.ships.model.ship.*;
 import com.hobbyjoin.ships.model.weather.WeatherMini;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +36,11 @@ public class DestinationService {
         return destinationData;
     }
 
+    public List<Destination> getAllDestinations() {
+        final List<Destination> all = destinationRepository.findAll();
+        return all;
+    }
+
     public String prepareReturnAjaxWeatherMessage(WeatherMini weatherApi) {
         if(weatherApi.equals(null)){
             return "";
@@ -53,8 +56,8 @@ public class DestinationService {
         return weatherDataView.toString();
     }
 
-    public void saveDestination(Destination destination) {
-        destinationRepository.save(destination);
+    public Destination saveDestination(Destination destination) {
+        return destinationRepository.save(destination);
     }
 
     public String getValidationNameExistsError(String oldName, String newName) {

@@ -30,22 +30,19 @@ public class DestinationApiControllerTest {
     private DestinationRepository destinationRepository;
 
     @MockBean
+    private DestinationService destinationService;
+
+    @MockBean
     private UserDetailsServiceImpl userDetailsService;
 
     Destination mockPort = new Destination("PORT_GDYNIA", 55.4,66.3);
 
     @Test
     public void retrieveDetailsForDestination() throws Exception {
-        Mockito.when(destinationRepository.findById(Mockito.anyInt())).thenReturn(java.util.Optional.ofNullable(mockPort));
+        Mockito.when(destinationService.getDestinationFromId(Mockito.anyInt())).thenReturn(java.util.Optional.ofNullable(mockPort));
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/destination/1").accept(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-        System.out.println(result.getResponse().getContentAsString());
         String expected = "{\"id\":null,\"name\":\"PORT_GDYNIA\",\"latitude\":55.4,\"longitude\":66.3,\"description\":null,\"info\":null,\"blackList\":false,\"userId\":null}";
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
     }
-
-
-
-
-
 }
