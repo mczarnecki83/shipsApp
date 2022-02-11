@@ -35,7 +35,7 @@ public class DestinationApiControllerTest {
     Destination mockPort = new Destination("PORT_GDYNIA", 55.4,66.3);
 
     @Test
-    public void retrieveDetailsForCourse() throws Exception {
+    public void retrieveDetailsForDestination() throws Exception {
         Mockito.when(destinationRepository.findById(Mockito.anyInt())).thenReturn(java.util.Optional.ofNullable(mockPort));
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/destination/1").accept(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
